@@ -60,6 +60,8 @@ npm install -g @agentplug/cli
 
 ## 发行校验
 
+当前 CLI `0.1.0-preview.11` 是 `0.1.0-preview.10` 的 README 文档补丁，执行载荷与 Runtime 相同。macOS Runtime `0.1.2-macos.4` 已提供项目级与用户级连接，升级 CLI 不会自动替换已有 Runtime。 [文档补丁验收](https://github.com/starXmate/agent-plugins-hub-releases/releases/download/v0.1.2-macos.4/verified-npm-readme-preview.11.json)
+
 两种原生 Mac 均已验证真实系统 Keychain、Codex App Server 首次安装、升级保留绑定与授权、撤销并重连及冷启动。实际测试平台、源码和精确摘要见 [Runtime 0.1.2-macos.4](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.2-macos.4) 附带的验收报告；Homebrew 与模型对话继续单列。
 
 Assets 中的 Runtime 归档、`*.sigstore.json`、`SHA256SUMS`、npm `*.tgz`/`*.inventory.json` 和 `verified-*.json` 用于自动验签与追溯。普通用户使用顶部 npm 安装命令即可。
