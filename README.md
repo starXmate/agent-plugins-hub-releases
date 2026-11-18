@@ -49,7 +49,6 @@ agentplug help add
 
 仓库包含多个插件时，加 `--path <插件子目录>`。终端会展示来源、权限和范围，并审查 Agent 连接。安装 ID 在更新后保持稳定；移除保留其他引用所需的共享版本与数据。
 
-[插件市场](https://plugins.xiqinger.com/marketplace) · [使用文档](https://plugins.xiqinger.com/docs#cli) · [npm 包](https://www.npmjs.com/package/@agentplug/cli)
 
 ## 从旧版升级
 
