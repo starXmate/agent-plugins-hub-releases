@@ -1,51 +1,70 @@
 # Agent Plugins Hub Releases
 
-官方 Runtime/CLI 成品分发仓库。当前预览：[**v0.1.1 · Linux / Windows x64**](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.1)。
+官方 Runtime/CLI 成品分发仓库。当前 npm CLI 为 **`@agentplug/cli@0.1.0-preview.10`**；macOS Runtime 为 [**0.1.2-macos.4**](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.2-macos.4)。Ubuntu 24.04 x64 与 Windows 11 x64 继续使用 [Runtime 0.1.1](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.1)，尚不包含本次项目连接更新。
 
-## 快速使用
+## 安装
 
-需要 **Node.js 24.18.0**。本轮使用 GitHub 安装入口，安装一次即可管理插件：
+需要 **Node.js 16 或更高版本**。macOS 支持 26.5 及更新的 26.x，包含 Apple Silicon 与 Intel。
 
 ```sh
-npm install -g https://github.com/starXmate/agent-plugins-hub-releases/releases/download/v0.1.1/agentplug-0.1.0-preview.2.tgz
+npm install -g @agentplug/cli
+agentplug list
 ```
 
+首次管理命令自动准备匹配平台的运行环境，下载官方 Runtime 并验签。帮助与版本查询无需下载 Runtime。
+
+## 选择项目级或用户级
+
+以真实市场条目 Frontend Design 为例。项目级供指定项目使用；用户级供当前用户在本机各项目使用。Codex 项目级连接前，先在 Codex 中信任目标项目。
+
 ```sh
-agentplug add <市场条目或owner/repo> --agent codex
+# 项目级：从目标项目目录执行
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent codex --project .
+
+# 项目级：从其他目录指定项目，将示例路径换成实际路径
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent codex --project "/path/to/My Project"
+
+# 用户级：从任意目录执行
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent codex --user
+
+# Claude Code
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent claude-code --project .
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent claude-code --user
+
+# Cursor
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent cursor --project .
+agentplug add catalog:skill-anthropics-skills-frontend-design --agent cursor --user
+```
+
+在 Cursor 中批准并加载对应 Hub MCP 服务后，运行 `agentplug confirm-agent-reload <连接ID> --confirm`，连接 ID 取自安装结果的 `connection.connection.id`。
+
+由 Hub 执行的 Skill/MCP 最低已验证稳定版本：Codex `0.152.1`、Claude Code `2.1.263`、Cursor `3.18.9`；连接时继续检查实际可用接口。这些项目连接与版本兼容变化需要 macOS Runtime `0.1.2-macos.4` 或更新版本。Cursor 桌面交互聊天仍单列验收。
+
+```sh
 agentplug list
 agentplug update <安装ID>
 agentplug remove <安装ID>
+agentplug help add
 ```
 
-仓库包含多个插件时，加 `--path <插件子目录>`。首次管理命令自动下载并校验对应平台的运行组件，无需选择 Assets 或手动处理签名文件。终端先展示来源、权限和范围，确认后安装；目标 Agent 连接会单独审查。安装 ID 在更新后保持不变，移除保留共享版本与数据。
+仓库包含多个插件时，加 `--path <插件子目录>`。终端会展示来源、权限和范围，并审查 Agent 连接。安装 ID 在更新后保持稳定；移除保留其他引用所需的共享版本与数据。
 
-在[插件市场](https://plugins.xiqinger.com/)发现条目后，可复制 Hub 命令，也可继续使用来源方安装方案。帮助：`agentplug help`、`agentplug help add`、`agentplug help advanced`。
+[插件市场](https://plugins.xiqinger.com/marketplace) · [使用文档](https://plugins.xiqinger.com/docs#cli) · [npm 包](https://www.npmjs.com/package/@agentplug/cli)
 
-无需全局安装时，可直接执行同一薄包：
+## 从旧版升级
 
 ```sh
-npx --yes https://github.com/starXmate/agent-plugins-hub-releases/releases/download/v0.1.1/agentplug-0.1.0-preview.2.tgz list
+npm install -g @agentplug/cli
 ```
 
-公共 npm 包本轮不发布，裸 `npx agentplug` 暂不可用，请使用上面的 GitHub 入口。
+已有 Runtime 不会因 CLI 升级自动替换。继续使用原 Node.js 24.18.0 安装路径，下载并解压本页对应架构的签名归档，执行 `agentplug setup <解压后的目录>`，再审查并重新连接目标 Agent。
 
-## 已验证范围
+## 发行校验
 
-- Ubuntu 24.04 x64（glibc 2.39）及 Windows 11 25H2 x64（build 26200），Node 24.18.0；Intel macOS、Homebrew 和其他架构暂缓。
-- 同一签名候选已在两个原生 Runner 验证首次启动、四条管理命令、稳定安装 ID、数据保留及冷启动。
-- Linux 以 nobody、空白配置从真实公开 URL 下载并通过相同管理闭环，市场固定仓库来源审查也通过。Windows 公开下载归档验签、摘要与原生成品一致。
-- 此版提供基础插件管理；实际 Agent 加载、模型调用、多 Agent 及完整生产稳定性继续单独验收。
+两种原生 Mac 均已验证真实系统 Keychain、Codex App Server 首次安装、升级保留绑定与授权、撤销并重连及冷启动。实际测试平台、源码和精确摘要见 [Runtime 0.1.2-macos.4](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.2-macos.4) 附带的验收报告；Homebrew 与模型对话继续单列。
 
-<details>
-<summary>维护者：Assets 各文件的用途</summary>
+Assets 中的 Runtime 归档、`*.sigstore.json`、`SHA256SUMS`、npm `*.tgz`/`*.inventory.json` 和 `verified-*.json` 用于自动验签与追溯。普通用户使用顶部 npm 安装命令即可。
 
-| 文件 | 用途 |
-| --- | --- |
-| `agentplug-*.tgz` | 顶部安装命令使用的公共薄启动器。 |
-| Linux/Windows `*.tar.gz` | CLI 自动选择并下载的运行组件。 |
-| `*.sigstore.json` | CLI 自动配套获取并验证的来源、完整性证据。 |
-| `*.inventory.json` | 薄包内容及摘要记录。 |
-| `acceptance-evidence.json` 及其签名 | 固定候选、摘要和实际原生作业的验收证据。 |
+## License
 
-这些附件用于自动校验与追溯，普通用户使用顶部安装入口即可。
-</details>
+CLI 与 Runtime 使用 [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)，第三方依赖保留各自许可证。
