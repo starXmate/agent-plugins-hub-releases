@@ -1,6 +1,6 @@
 # Agent Plugins Hub Releases
 
-官方 Runtime/CLI 成品分发仓库。当前 npm CLI 为 **`@agentplug/cli@0.1.0-preview.10`**；macOS Runtime 为 [**0.1.2-macos.4**](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.2-macos.4)。Ubuntu 24.04 x64 与 Windows 11 x64 继续使用 [Runtime 0.1.1](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.1)，尚不包含本次项目连接更新。
+官方 Runtime/CLI 成品分发仓库。当前 npm CLI 为 **`@agentplug/cli@0.1.0-preview.11`**；macOS Runtime 为 [**0.1.2-macos.4**](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.2-macos.4)。Ubuntu 24.04 x64 与 Windows 11 x64 继续使用 [Runtime 0.1.1](https://github.com/starXmate/agent-plugins-hub-releases/releases/tag/v0.1.1)，尚不包含本次项目连接更新。
 
 ## 安装
 
